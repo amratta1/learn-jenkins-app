@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image 'node:18.20-alpine3.19'
+                    image 'node:lts-bookworm-slim'
                     reuseNode true
                 }
             }
