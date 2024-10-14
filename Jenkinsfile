@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image 'node:lts-buster'
+                    image 'amratta85/node:app'
                     reuseNode true
                 }
             }
