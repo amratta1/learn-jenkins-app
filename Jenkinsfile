@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image 'node:lts-bookworm-slim'
+                    image 'node:lts-buster'
                     reuseNode true
                 }
             }
