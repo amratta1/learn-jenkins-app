@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image 'node:19-alpine'
+                    image 'node:18-alpine'
                     reuseNode true
                 }
             }
@@ -14,8 +14,7 @@ pipeline {
                     ls -la
                     node --version
                     npm --version
-                    chown -R 992:989 .npm
-                    npm  ci
+                    npm install
                     npm run build 
                     ls -la
                 '''
