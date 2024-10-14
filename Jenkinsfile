@@ -14,8 +14,7 @@ pipeline {
                     ls -la
                     node --version
                     npm --version
-                    mkdir /.npm
-                    chown -R 992:989 /.npm
+                    ls -la /
                     npm ci
                     npm run build 
                     ls -la
