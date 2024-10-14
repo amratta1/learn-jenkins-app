@@ -14,7 +14,7 @@ pipeline {
                     ls -la
                     node --version
                     npm --version
-                    chown -R 992:989 /.npm
+                    npm config set -g user="root"
                     npm install
                     npm run build 
                     ls -la
