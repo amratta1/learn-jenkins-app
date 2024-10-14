@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image 'amratta85/node:app'
+                    image 'node:18.20.4-bookworm'
                     reuseNode true
                 }
             }
