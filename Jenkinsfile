@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image 'node:18-alpine'
+                    image 'node:18.20-alpine3.19'
                     reuseNode true
                 }
             }
@@ -14,8 +14,6 @@ pipeline {
                     ls -la
                     node --version
                     npm --version
-                    ls -la /
-                    chown -R $(whoami) ~/.npm
                     npm ci
                     npm run build 
                     ls -la
