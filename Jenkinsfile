@@ -21,7 +21,6 @@ pipeline {
             }
         }
 
-        stages {
         stage('test') {
             agent {
                 docker {
