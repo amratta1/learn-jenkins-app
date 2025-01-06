@@ -24,10 +24,9 @@ pipeline {
             }
         }
 
-
        stage (Test){
           parallel{
-            stage('Test') {
+            stage('UnitTest') {
                 agent {
                     docker {
                        image 'node:18-alpine'
@@ -60,7 +59,7 @@ pipeline {
                         sleep 10
                         npx playwright test --reporter=html
                     '''
-                }
+              }
             }
           }
        }
