@@ -5,34 +5,37 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image 'node:18-alpine'
-                    reuseNode true
-                }
+                   image 'node:18-alpine'
+                   reuseNode true 
+                   args '--user root' 
+                } 
+ 
             }
             steps {
                 sh '''
-                    ls -la
-                    node --version
-                    npm --version
-                    npm ci
-                    npm run build
-                    ls -la
-                '''
+                ls -la
+                node --version
+                npm --version
+                npm ci 
+                npm run build 
+                ls -la  
+                ''' 
             }
         }
 
         stage('Test') {
             agent {
                 docker {
-                    image 'node:18-alpine'
-                    reuseNode true
+                   image 'node:18-alpine'
+                   reuseNode true
+                   args '--user root'
                 }
-            }
 
+            }
             steps {
                 sh '''
-                    #test -f build/index.html
-                    npm test
+                  #test -f ./build/index.html
+                  npm test
                 '''
             }
         }
@@ -40,11 +43,12 @@ pipeline {
         stage('E2E') {
             agent {
                 docker {
-                    image 'mcr.microsoft.com/playwright:v1.49.1-noble'
-                    reuseNode true
+                   image 'mcr.microsoft.com/playwright:v1.49.1-noble'
+                   reuseNode true
+                   args '--user root:root'
                 }
-            }
 
+            }
             steps {
                 sh '''
                     npm install serve
@@ -54,12 +58,11 @@ pipeline {
                 '''
             }
         }
-    }
 
-    post {
-        always {
-            junit 'jest-results/junit.xml'
-        }
+    }
+    post{
+     always {
+      junit 'test-results/junit.xml'    
+      }
     }
 }
-
