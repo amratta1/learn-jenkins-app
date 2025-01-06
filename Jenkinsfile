@@ -43,7 +43,7 @@ pipeline {
         stage('E2E') {
             agent {
                 docker {
-                   image 'mcr.microsoft.com/playwright:v1.49.1-noble'
+                   image 'mcr.microsoft.com/playwright:v1.39.0-noble'
                    reuseNode true
                    args '--user root:root'
                 }
@@ -62,7 +62,7 @@ pipeline {
     }
     post{
      always {
-      junit 'jest-results/junit.xml'    
+      junit 'test-results/junit.xml'    
       }
     }
 }
