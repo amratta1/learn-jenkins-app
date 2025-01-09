@@ -117,7 +117,7 @@ pipeline {
               }
  
            environment {
-             CI_ENVIRONMENT_URL: 'https://frabjous-semifreddo-fb4dec.netlify.app'
+             CI_ENVIRONMENT_URL = 'https://frabjous-semifreddo-fb4dec.netlify.app'
            }
            
            steps {
