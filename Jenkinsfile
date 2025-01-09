@@ -114,7 +114,8 @@ pipeline {
                   reuseNode true
                   args '--user root:root'
                }
-
+              }
+ 
            environment {
              CI_ENVIRONMENT_URL: 'https://frabjous-semifreddo-fb4dec.netlify.app'
            }
@@ -141,4 +142,3 @@ pipeline {
     }
    }
  }
-}
