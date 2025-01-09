@@ -71,10 +71,13 @@ pipeline {
                     post {
                         always {
                             publishHTML([
+                                allowMissing: false, 
+                                alwaysLinkToLastBuild: false, 
+                                keepAll: false, 
                                 reportDir: 'playwright-report', 
                                 reportFiles: 'index.html', 
-                                reportName: 'Playwright Local HTML Report', 
-                                allowMissing: false, 
+                                reportName: 'Playwright Local', 
+                                reportTitles: '', 
                                 useWrapperFileDirectly: true
                             ])
                         }
@@ -141,10 +144,13 @@ pipeline {
             post {
                 always {
                     publishHTML([
+                        allowMissing: false, 
+                        alwaysLinkToLastBuild: false, 
+                        keepAll: false, 
                         reportDir: 'playwright-report', 
                         reportFiles: 'index.html', 
-                        reportName: 'Playwright Prod HTML Report', 
-                        allowMissing: false, 
+                        reportName: 'Playwright Local', 
+                        reportTitles: '', 
                         useWrapperFileDirectly: true
                     ])
                 }
