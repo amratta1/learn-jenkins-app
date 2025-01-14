@@ -25,13 +25,11 @@ pipeline {
             steps {
                 sh '''
                     echo "Building the project..."
-                    ls -la
                     node --version
                     npm --version
                     npm install
                     npm ci
                     npm run build
-                    ls -la
                 '''
             }
         }
@@ -70,7 +68,7 @@ pipeline {
                     steps {
                         sh '''
                             echo "Running E2E Tests..."
-                            serve -s build &
+                            npm serve -s build &
                             sleep 10
                             npx playwright test --reporter=html
                         '''
