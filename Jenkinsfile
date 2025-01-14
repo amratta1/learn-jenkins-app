@@ -90,7 +90,6 @@ pipeline {
                 docker {
                     image 'my-playwright'
                     reuseNode true
-                    #args '--user root:root'
                 }
             }
             environment {
@@ -120,7 +119,6 @@ pipeline {
                 docker {
                     image 'my-playwright'
                     reuseNode true
-                    #args '--user root:root'
                 }
             }
             environment {
