@@ -19,7 +19,7 @@ pipeline {
                 docker {
                     image 'node:18-alpine'
                     reuseNode true
-                    args '--user root'
+                   // args '--user root'
                 }
             }
             steps {
@@ -43,7 +43,7 @@ pipeline {
                         docker {
                             image 'node:18-alpine'
                             reuseNode true
-                            args '--user root:root'
+                            //args '--user root:root'
                         }
                     }
                     steps {
@@ -62,16 +62,15 @@ pipeline {
                 stage('E2E Tests') {
                     agent {
                         docker {
-                            image 'mcr.microsoft.com/playwright:v1.49.1-noble'
+                            image 'my-playwright'
                             reuseNode true
-                            args '--user root:root'
+                            // args '--user root:root'
                         }
                     }
                     steps {
                         sh '''
                             echo "Running E2E Tests..."
-                            npm install serve
-                            node_modules/.bin/serve -s build &
+                            serve -s build &
                             sleep 10
                             npx playwright test --reporter=html
                         '''
@@ -92,7 +91,7 @@ pipeline {
                 docker {
                     image 'my-playwright'
                     reuseNode true
-                    args '--user root:root'
+                    // args '--user root:root'
                 }
             }
             environment {
@@ -122,7 +121,7 @@ pipeline {
                 docker {
                     image 'my-playwright'
                     reuseNode true
-                    args '--user root:root'
+                    // args '--user root:root'
                 }
             }
             environment {
