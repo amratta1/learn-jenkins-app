@@ -8,10 +8,12 @@ pipeline {
 
     stages {
         stage(docker){
-           sh '''
-              docker build -t my-playwright .
-              ''' 
-           } 
+          steps{ 
+             sh '''
+                docker build -t my-playwright .
+               ''' 
+              }
+          }
         stage('Build') {
             agent {
                 docker {
