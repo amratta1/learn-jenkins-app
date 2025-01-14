@@ -7,6 +7,10 @@ pipeline {
     }
 
     stages {
+        stage(docker){
+           sh '''
+              docker build -t my-playwright .
+           } 
         stage('Build') {
             agent {
                 docker {
@@ -36,7 +40,7 @@ pipeline {
                         docker {
                             image 'node:18-alpine'
                             reuseNode true
-                            args '--user root'
+                            args '--user root:root'
                         }
                     }
                     steps {
@@ -72,9 +76,14 @@ pipeline {
                     post {
                         always {
                             publishHTML([
+<<<<<<< HEAD
                                 allowMissing: false,alwaysLinkToLastBuild: false,keepAll: false,reportDir: 'playwright-report',reportFiles: 'index.html', 
                                 reportName: 'Playwright Local', reportTitles: '', useWrapperFileDirectly: true
                             ])
+=======
+                                allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright Local', 
+                                reportTitles: '', useWrapperFileDirectly: true ])
+>>>>>>> 40174b8 (update)
                         }
                     }
                 }
@@ -84,9 +93,9 @@ pipeline {
         stage('Deploy Staging') {
             agent {
                 docker {
-                    image 'mcr.microsoft.com/playwright:v1.49.1-noble'
+                    image 'my-playwright'
                     reuseNode true
-                    args '--user root:root'
+                    #args '--user root:root'
                 }
             }
             environment {
@@ -94,11 +103,10 @@ pipeline {
             }
             steps {
                 sh '''
-                    npm install netlify-cli node-jq
-                    node_modules/.bin/netlify --version
-                    node_modules/.bin/netlify status
-                    node_modules/.bin/netlify deploy --dir=build
-                    node_modules/.bin/netlify deploy --dir=build --json > deploy-output.json
+                    netlify --version
+                    netlify status
+                    netlify deploy --dir=build
+                    netlify deploy --dir=build --json > deploy-output.json
                     CI_ENVIRONMENT_URL=$(node_modules/.bin/node-jq -r '.deploy_url' deploy-output.json)
                     npx playwright test --reporter=html
                 '''
@@ -106,8 +114,8 @@ pipeline {
 
             post {
                 always {
-                    publishHTML([allowMissing: false,alwaysLinkToLastBuild: false,keepAll: false,reportDir: 'playwright-report',reportFiles: 'index.html',
-                    reportName: 'Staging E2E', reportTitles: '',useWrapperFileDirectly: true ])
+                    publishHTML([allowMissing: false,alwaysLinkToLastBuild: false,keepAll: false,reportDir: 'playwright-report',reportFiles: 'index.html', reportName: 'Staging E2E', 
+                    reportTitles: '',useWrapperFileDirectly: true ])
                 }
             }
          }
@@ -115,9 +123,9 @@ pipeline {
         stage('Deploy Prod') {
             agent {
                 docker {
-                    image 'mcr.microsoft.com/playwright:v1.49.1-noble'
+                    image 'my-playwright'
                     reuseNode true
-                    args '--user root:root'
+                    #args '--user root:root'
                 }
             }
             environment {
@@ -125,17 +133,16 @@ pipeline {
             }
             steps {
                 sh '''
-                    npm install netlify-cli
-                    node_modules/.bin/netlify --version
-                    node_modules/.bin/netlify status
-                    node_modules/.bin/netlify deploy --dir=build --prod
+                    netlify --version
+                    netlify status
+                    netlify deploy --dir=build --prod
                     npx playwright test --reporter=html
                 '''
             }
             post {
                 always {
-                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', 
-                    reportName: 'Production E2E', reportTitles: '', useWrapperFileDirectly: true ])
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Production E2E', 
+                    reportTitles: '', useWrapperFileDirectly: true ])
                 }
             }
         }
