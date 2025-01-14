@@ -19,7 +19,7 @@ pipeline {
                 docker {
                     image 'node:18-alpine'
                     reuseNode true
-                   // args '--user root'
+                    args '--user root'
                 }
             }
             steps {
@@ -91,7 +91,7 @@ pipeline {
                 docker {
                     image 'my-playwright'
                     reuseNode true
-                    // args '--user root:root'
+                    args '--user root:root'
                 }
             }
             environment {
@@ -121,7 +121,7 @@ pipeline {
                 docker {
                     image 'my-playwright'
                     reuseNode true
-                    // args '--user root:root'
+                    args '--user root:root'
                 }
             }
             environment {
