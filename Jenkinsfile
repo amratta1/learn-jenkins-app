@@ -57,7 +57,7 @@ pipeline {
                     }
                 }
 
-                stage('E2E Tests') {
+                stage('E2E ') {
                     agent {
                         docker {
                             image 'my-playwright'
@@ -67,8 +67,7 @@ pipeline {
                     }
                     steps {
                         sh '''
-                            echo "Running E2E Tests..."
-                            npm serve -s build &
+                            serve -s build &
                             sleep 10
                             npx playwright test --reporter=html
                         '''
