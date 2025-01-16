@@ -7,7 +7,35 @@ pipeline {
         AWS_ECS_SERVICE_PROD = 'learnJenkinsApp-Prod'
         AWS_ECS_TD_PROD = 'LearnJenkinsApp-TaskDefinition-Prod'
     } 
-    stages{  
+    stages{ 
+        stage('Build') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                    args '--user root'
+                }
+            }
+            steps {
+                sh '''
+                    echo "Building the project..."
+                    node --version
+                    npm --version
+                    npm install
+                    npm ci
+                    npm run build
+                '''
+            }
+        }
+
+          stage('Build Docker Images') {
+             steps {
+                sh '''
+                  docker build -t myjenkinsapp .
+                '''
+             }
+          }
+
         stage(aws){
            agent {
              docker {
@@ -29,26 +57,6 @@ pipeline {
              '''
             }
           }
-        }
-
-        stage('Build') {
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                    reuseNode true
-                    args '--user root'
-                }
-            }
-            steps {
-                sh '''
-                    echo "Building the project..."
-                    node --version
-                    npm --version
-                    npm install
-                    npm ci
-                    npm run build
-                '''
-            }
-        }
-  }
+       }
+    } 
 }
